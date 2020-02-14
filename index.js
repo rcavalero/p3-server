@@ -1,5 +1,6 @@
 var express = require('express');
 const cors = require("cors");
+
 // Sets up the Express App
 // =============================================================
 var app = express();
@@ -13,25 +14,17 @@ app.use(cors({
 // }));
 
 // Requiring our models for syncing
-// var db = require('./models');
+var db = require('./models');
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+const ingredientController = require("./controllers/ingredientController");
+app.use(ingredientController)
 
-// once we determine what routes we need we can include here or create a route/controller file
-// app.get("/api/animals",(req,res)=>{
-//     db.Animal.findAll().then(animals=>{
-//         res.json(animals);
-//     })
-// })
-
-// db.sequelize.sync({ force: false }).then(function() {
-//     app.listen(PORT, function() {
-//     console.log('App listening on PORT ' + PORT);
-//     });
-// });
-app.listen(PORT, function () {
+db.sequelize.sync({ force: false }).then(function() {
+    app.listen(PORT, function() {
     console.log('App listening on PORT ' + PORT);
+    });
 });
