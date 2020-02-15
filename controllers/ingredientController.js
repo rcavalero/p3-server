@@ -15,6 +15,8 @@ router.post("/api/ingredients", (req, res) => {
 })
 
 router.put("/api/ingredients/:id", (req, res) => {
+    console.log(req.body);
+    
     db.Ingredient.update(
         req.body,
         {
@@ -27,7 +29,7 @@ router.put("/api/ingredients/:id", (req, res) => {
 })
 
 router.delete("/api/ingredients/delete/:id", (req, res) => {
-    db.ingredient.destroy({
+    db.Ingredient.destroy({
         where: {
             id: req.params.id
         }
