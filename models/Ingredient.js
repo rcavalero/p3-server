@@ -3,7 +3,8 @@ module.exports = function(sequelize, DataTypes) {
       ingredient:{ type: DataTypes.STRING, allowNull: false},
       asin1:DataTypes.STRING,
       asin2:DataTypes.STRING,
-      asin3:DataTypes.STRING
+      asin3:DataTypes.STRING,
+      asin4:DataTypes.STRING
     });
   
   
