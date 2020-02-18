@@ -25,6 +25,12 @@ router.post("/api/ingredients", (req, res) => {
     })
 })
 
+router.post("/api/recommendation", (req, res) => {
+    db.Recommendation.create(req.body).then(data => {
+        res.json(data)
+    })
+})
+
 router.put("/api/ingredients/:id", (req, res) => {
     db.Ingredient.update(
         req.body,
