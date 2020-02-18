@@ -6,12 +6,12 @@ const cors = require("cors");
 var app = express();
 var PORT = process.env.PORT || 8080;
 
-// app.use(cors({
-//     origin:["http://localhost:3000"]
-// }));
 app.use(cors({
-    origin:["https://seefoodar.herokuapp.com"]
+    origin:["http://localhost:3000"]
 }));
+// app.use(cors({
+//     origin:["https://seefoodar.herokuapp.com"]
+// }));
 
 // Requiring our models for syncing
 var db = require('./models');
@@ -23,7 +23,7 @@ app.use(express.json());
 const ingredientController = require("./controllers/ingredientController");
 app.use(ingredientController)
 
-db.sequelize.sync({ force: false }).then(function() {
+db.sequelize.sync({ force: true }).then(function() {
     app.listen(PORT, function() {
     console.log('App listening on PORT ' + PORT);
     });
