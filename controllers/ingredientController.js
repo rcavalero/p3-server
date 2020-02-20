@@ -8,7 +8,7 @@ router.get("/api/ingredients", (req, res) => {
     })
 })
 
-router.get("/api/ingredients/:id", (req, res) => {
+router.get("/api/ingredient/:id", (req, res) => {
     db.Ingredient.findOne(
         {
             where: {
@@ -27,10 +27,12 @@ router.get("/api/recommendations/:id", (req, res) => {
             where: {
                 Ingredientid: req.params.id,
             },
+
         }).then(data => {
             res.json(data)
         })
 })
+
 
 router.post("/api/ingredient", (req, res) => {
     db.Ingredient.create(req.body).then(data => {
