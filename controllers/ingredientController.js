@@ -19,13 +19,15 @@ router.get("/api/ingredient/:id", (req, res) => {
         })
 })
 
-
 router.get("/api/recommendations/:id", (req, res) => {
     db.Recommendation.findAll(
-        {
+        {   attributes: ["brand","url","image","price"],
+            //    , group: ["name"],
+            include: [{model: db.Ingredient,attributes: ["name"] }],
             where: {
-                IngredientId: req.params.id
-            }
+                Ingredientid: req.params.id,
+            },
+
         }).then(data => {
             res.json(data)
         })
@@ -44,17 +46,17 @@ router.post("/api/recommendation", (req, res) => {
     })
 })
 
-router.put("/api/ingredient/:id", (req, res) => {
-    db.Ingredient.update(
-        req.body,
-        {
-            where: {
-                id: req.params.id
-            }
-        }).then(data => {
-            res.json(data)
-        })
-})
+// router.put("/api/ingredients/:id", (req, res) => {
+//     db.Ingredient.update(
+//         req.body,
+//         {
+//             where: {
+//                 id: req.params.id
+//             }
+//         }).then(data => {
+//             res.json(data)
+//         })
+// })
 
 router.delete("/api/ingredient/:id", (req, res) => {
     db.Ingredient.destroy({
@@ -75,5 +77,4 @@ router.delete("/api/recommendation/:id", (req, res) => {
         res.json(deletedRecommendation);
     })
 })
-
 module.exports = router;
