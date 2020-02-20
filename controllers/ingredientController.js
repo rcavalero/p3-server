@@ -19,6 +19,7 @@ router.get("/api/ingredient/:id", (req, res) => {
         })
 })
 
+
 router.get("/api/recommendations/:id", (req, res) => {
     db.Recommendation.findAll(
         {
@@ -29,6 +30,7 @@ router.get("/api/recommendations/:id", (req, res) => {
             res.json(data)
         })
 })
+
 
 router.post("/api/ingredient", (req, res) => {
     db.Ingredient.create(req.body).then(data => {
