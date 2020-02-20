@@ -19,7 +19,7 @@ router.get("/api/ingredients/:id", (req, res) => {
         })
 })
 
-router.post("/api/ingredients", (req, res) => {
+router.post("/api/ingredient", (req, res) => {
     db.Ingredient.create(req.body).then(data => {
         res.json(data)
     })
