@@ -19,7 +19,20 @@ router.get("/api/ingredients/:id", (req, res) => {
         })
 })
 
-router.post("/api/ingredients", (req, res) => {
+router.get("/api/recommendations/:id", (req, res) => {
+    db.Recommendation.findAll(
+        {   attributes: ["brand","url","image","price"],
+            //    , group: ["name"],
+            include: [{model: db.Ingredient,attributes: ["name"] }],
+            where: {
+                Ingredientid: req.params.id,
+            },
+        }).then(data => {
+            res.json(data)
+        })
+})
+
+router.post("/api/ingredient", (req, res) => {
     db.Ingredient.create(req.body).then(data => {
         res.json(data)
     })
@@ -31,19 +44,19 @@ router.post("/api/recommendation", (req, res) => {
     })
 })
 
-router.put("/api/ingredients/:id", (req, res) => {
-    db.Ingredient.update(
-        req.body,
-        {
-            where: {
-                id: req.params.id
-            }
-        }).then(data => {
-            res.json(data)
-        })
-})
+// router.put("/api/ingredients/:id", (req, res) => {
+//     db.Ingredient.update(
+//         req.body,
+//         {
+//             where: {
+//                 id: req.params.id
+//             }
+//         }).then(data => {
+//             res.json(data)
+//         })
+// })
 
-router.delete("/api/ingredients/:id", (req, res) => {
+router.delete("/api/ingredient/:id", (req, res) => {
     db.Ingredient.destroy({
         where: {
             id: req.params.id
@@ -53,4 +66,13 @@ router.delete("/api/ingredients/:id", (req, res) => {
     })
 })
 
+router.delete("/api/recommendation/:id", (req, res) => {
+    db.Recommendation.destroy({
+        where: {
+            id: req.params.id
+        }
+    }).then(deletedRecommendation => {
+        res.json(deletedRecommendation);
+    })
+})
 module.exports = router;
