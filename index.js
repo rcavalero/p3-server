@@ -20,6 +20,7 @@ var db = require('./models');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+
 const ingredientController = require("./controllers/ingredientController");
 app.use(ingredientController)
 
