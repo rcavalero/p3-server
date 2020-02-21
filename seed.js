@@ -15,7 +15,7 @@ db.Ingredient.bulkCreate(
     {   name: "Hamburger Buns"}
     ],
 ).then(function (dbIngredient) {
-    console.log(dbIngredient);
+    console.log("Ingredients added!");
 
 
     db.Recommendation.bulkCreate(
@@ -40,7 +40,7 @@ db.Ingredient.bulkCreate(
             price: 11.39,
             IngredientId: 3
         }]
-    ).then(function (dbRole) {
-        console.log(dbRole);
+    ).then(function (dbIngredient) {
+        console.log("Recommendations added!");
     });
 })

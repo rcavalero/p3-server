@@ -21,9 +21,9 @@ router.get("/api/ingredient/:id", (req, res) => {
 
 router.get("/api/recommendations/:id", (req, res) => {
     db.Recommendation.findAll(
-        {   attributes: ["brand","url","image","price"],
+        {   attributes: ["brand", "url", "image", "price"],
             //    , group: ["name"],
-            include: [{model: db.Ingredient,attributes: ["name"] }],
+            include: [{model: db.Ingredient, attributes: ["name"] }],
             where: {
                 Ingredientid: req.params.id,
             },
@@ -77,4 +77,53 @@ router.delete("/api/recommendation/:id", (req, res) => {
         res.json(deletedRecommendation);
     })
 })
+
+
+// router.get("/api/seed", (req, res) => {
+
+//     db.Ingredient.bulkCreate(
+//         [
+//             { name: "Salt" },
+//             { name: "Pepper" },
+//             { name: "Ketchup" },
+//             { name: "Onion" },
+//             { name: "Tomato" },
+//             { name: "Ground Beef" },
+//             { name: "Mayonaise" },
+//             { name: "Cheddar Cheese" },
+//             { name: "Mustard" },
+//             { name: "Hamburger Buns" }
+//         ],
+//     ).then(function (dbIngredient) {
+//         console.log("Ingredients added!");
+
+
+//         db.Recommendation.bulkCreate(
+//             [{
+//                 brand: "Hunts",
+//                 url: "https://www.amazon.com/Hunts-Tomato-Ketchup/dp/B005GD9156",
+//                 image: "tba",
+//                 price: 4.79,
+//                 IngredientId: 3
+//             },
+//             {
+//                 brand: "Heinz",
+//                 url: "https://www.amazon.com/s?k=heinz+ketchup&i=grocery&crid=13KAL1N6GC6ZB&sprefix=heinz+%2Cgrocery%2C246&ref=nb_sb_ss_i_1_6",
+//                 image: "tba",
+//                 price: 2.23,
+//                 IngredientId: 3
+//             },
+//             {
+//                 brand: "Portland",
+//                 url: "https://www.amazon.com/s?k=portland+ketchup&i=grocery&ref=nb_sb_noss_2",
+//                 image: "tba",
+//                 price: 11.39,
+//                 IngredientId: 3
+//             }]
+//         ).then(function (dbRecommendation) {
+//             console.log("Recommendations added!");
+//         });
+//     })
+// })
+
 module.exports = router;
