@@ -10,7 +10,7 @@ var PORT = process.env.PORT || 8080;
 //     origin:["http://localhost:3000"]
 // }));
 app.use(cors({
-    origin:["https://seefood-app.herokuapp.com/"]
+    origin:["https://seefood-app.herokuapp.com"]
 }));
 
 // Requiring our models for syncing
