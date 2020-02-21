@@ -1,12 +1,13 @@
 module.exports = function(sequelize, DataTypes) {
     var Ingredient = sequelize.define("Ingredient", {
-      ingredient:{ type: DataTypes.STRING, allowNull: false},
-      asin1:DataTypes.STRING,
-      asin2:DataTypes.STRING,
-      asin3:DataTypes.STRING,
-      asin4:DataTypes.STRING
+      name:{ type: DataTypes.STRING, allowNull: false}
     });
-  
+
+    Ingredient.associate = function(models) {
+      Ingredient.hasMany(models.Recommendation, {
+        onDelete: "cascade"
+      });
+    };
   
     return Ingredient;
   };

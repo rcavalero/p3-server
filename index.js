@@ -10,7 +10,7 @@ var PORT = process.env.PORT || 8080;
 //     origin:["http://localhost:3000"]
 // }));
 app.use(cors({
-    origin:["https://seefoodar.herokuapp.com"]
+    origin:["https://seefood-app.herokuapp.com/"]
 }));
 
 // Requiring our models for syncing
@@ -24,7 +24,7 @@ app.use(express.json());
 const ingredientController = require("./controllers/ingredientController");
 app.use(ingredientController)
 
-db.sequelize.sync({ force: false }).then(function() {
+db.sequelize.sync({ force: true }).then(function() {
     app.listen(PORT, function() {
     console.log('App listening on PORT ' + PORT);
     });

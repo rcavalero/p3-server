@@ -8,7 +8,7 @@ router.get("/api/ingredients", (req, res) => {
     })
 })
 
-router.get("/api/ingredients/:id", (req, res) => {
+router.get("/api/ingredient/:id", (req, res) => {
     db.Ingredient.findOne(
         {
             where: {
@@ -19,25 +19,32 @@ router.get("/api/ingredients/:id", (req, res) => {
         })
 })
 
-router.post("/api/ingredients", (req, res) => {
-    db.Ingredient.create(req.body).then(data => {
-        res.json(data)
-    })
-})
-
-router.put("/api/ingredients/:id", (req, res) => {
-    db.Ingredient.update(
-        req.body,
-        {
+router.get("/api/recommendations/:id", (req, res) => {
+    db.Recommendation.findAll(
+        {   attributes: ["brand", "url", "image", "price"],
+            include: [{model: db.Ingredient, attributes: ["name"] }],
             where: {
-                id: req.params.id
-            }
+                Ingredientid: req.params.id,
+            },
+
         }).then(data => {
             res.json(data)
         })
 })
 
-router.delete("/api/ingredients/:id", (req, res) => {
+router.post("/api/ingredient", (req, res) => {
+    db.Ingredient.create(req.body).then(data => {
+        res.json(data)
+    })
+})
+
+router.post("/api/recommendation", (req, res) => {
+    db.Recommendation.create(req.body).then(data => {
+        res.json(data)
+    })
+})
+
+router.delete("/api/ingredient/:id", (req, res) => {
     db.Ingredient.destroy({
         where: {
             id: req.params.id
@@ -47,23 +54,61 @@ router.delete("/api/ingredients/:id", (req, res) => {
     })
 })
 
-router.get('/seedit',(req,res)=>{
-    const ingredients = [
-        {
-            "ingredient": "Salt",
-            "asin1": "B06XPN2785",
-            "asin2": "B00IZL2572",
-            "asin3": "B000Q3E8EA"
-        },
-        {
-            "ingredient": "Black Pepper",
-            "asin1": "B07VXKYTC3",
-            "asin2": "B074H5LYJN",
-            "asin3": "B0014E840Y"
+router.delete("/api/recommendation/:id", (req, res) => {
+    db.Recommendation.destroy({
+        where: {
+            id: req.params.id
         }
-    ]
-    db.Ingredient.bulkCreate(ingredients).then(data => {
-        console.log("dataSeeded");
+    }).then(deletedRecommendation => {
+        res.json(deletedRecommendation);
+    })
+})
+
+
+router.get("/api/seed", (req, res) => {
+
+    db.Ingredient.bulkCreate(
+        [
+            { name: "Salt" },
+            { name: "Pepper" },
+            { name: "Ketchup" },
+            { name: "Onion" },
+            { name: "Tomato" },
+            { name: "Ground Beef" },
+            { name: "Mayonaise" },
+            { name: "Cheddar Cheese" },
+            { name: "Mustard" },
+            { name: "Hamburger Buns" }
+        ],
+    ).then(function (dbIngredient) {
+        console.log("Ingredients added!");
+
+
+        db.Recommendation.bulkCreate(
+            [{
+                brand: "Hunts",
+                url: "https://www.amazon.com/Hunts-Tomato-Ketchup/dp/B005GD9156",
+                image: "tba",
+                price: 4.79,
+                IngredientId: 3
+            },
+            {
+                brand: "Heinz",
+                url: "https://www.amazon.com/s?k=heinz+ketchup&i=grocery&crid=13KAL1N6GC6ZB&sprefix=heinz+%2Cgrocery%2C246&ref=nb_sb_ss_i_1_6",
+                image: "tba",
+                price: 2.23,
+                IngredientId: 3
+            },
+            {
+                brand: "Portland",
+                url: "https://www.amazon.com/s?k=portland+ketchup&i=grocery&ref=nb_sb_noss_2",
+                image: "tba",
+                price: 11.39,
+                IngredientId: 3
+            }]
+        ).then(function (dbRecommendation) {
+            console.log("Recommendations added!");
+        });
     })
 })
 
