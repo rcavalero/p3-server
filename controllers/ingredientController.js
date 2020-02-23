@@ -21,7 +21,7 @@ router.get("/api/ingredient/:id", (req, res) => {
 
 router.get("/api/recommendations/:id", (req, res) => {
     db.Recommendation.findAll(
-        {   attributes: ["brand", "url", "image", "price"],
+        {   attributes: ["id","brand", "url", "image", "price"],
             include: [{model: db.Ingredient, attributes: ["name"] }],
             where: {
                 Ingredientid: req.params.id,
