@@ -10,17 +10,17 @@ const session = require("express-session")
 var app = express();
 var PORT = process.env.PORT || 8080;
 
-app.use(cors({
-    origin:["http://localhost:3000"],
-    credentials: true 
-}));
+// app.use(cors({
+//     origin:["http://localhost:3000"],
+//     credentials: true 
+// }));
 
 app.use(session({ secret: "something secret here", resave: true, saveUninitialized: true,cookie:{maxAge: 7200000} }));
 
-// app.use(cors({
-//     origin:["https://seefood-app.herokuapp.com"],
-    // credentials: true 
-// }));
+app.use(cors({
+    origin:["https://seefood-app.herokuapp.com"],
+    credentials: true 
+}));
 
 // Requiring our models for syncing
 var db = require('./models');
