@@ -1,4 +1,5 @@
 var express = require("express")
+const session = require("express-session")
 var router = express.Router()
 var db = require("../models");
 
@@ -33,35 +34,51 @@ router.get("/api/recommendations/:id", (req, res) => {
 })
 
 router.post("/api/ingredient", (req, res) => {
+if (req.session.user){
     db.Ingredient.create(req.body).then(data => {
         res.json(data)
     })
+} else {
+    res.status(401).json("log in first")
+}
 })
 
 router.post("/api/recommendation", (req, res) => {
-    db.Recommendation.create(req.body).then(data => {
+    if (req.session.user){
+        db.Recommendation.create(req.body).then(data => {
         res.json(data)
     })
+} else {
+    res.status(401).json("log in first")
+}
 })
 
 router.delete("/api/ingredient/:id", (req, res) => {
-    db.Ingredient.destroy({
+    if (req.session.user){
+        db.Ingredient.destroy({
         where: {
             id: req.params.id
         }
     }).then(deletedIngredient => {
         res.json(deletedIngredient);
     })
+} else {
+    res.status(401).json("log in first")
+}
 })
 
 router.delete("/api/recommendation/:id", (req, res) => {
-    db.Recommendation.destroy({
+    if (req.session.user){
+        db.Recommendation.destroy({
         where: {
             id: req.params.id
         }
     }).then(deletedRecommendation => {
         res.json(deletedRecommendation);
     })
+} else {
+    res.status(401).json("log in first")
+}
 })
 
 
